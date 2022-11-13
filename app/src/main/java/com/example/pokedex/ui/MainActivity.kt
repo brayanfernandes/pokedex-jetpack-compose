@@ -10,13 +10,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.pokedex.PokedexApplication
 import com.example.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            val pokedexRepository = (application as PokedexApplication).pokedexRepository
+            PokedexApp(pokedexRepository = pokedexRepository)
         }
     }
 }
