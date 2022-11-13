@@ -11,6 +11,7 @@ class PokedexApplication:Application() {
     lateinit var pokedexRepository:PokedexRepository
     override fun onCreate() {
         super.onCreate()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.POKEDEX_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

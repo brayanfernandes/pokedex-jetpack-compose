@@ -1,9 +1,9 @@
-package com.example.pokedex.model.pokemon
+package com.example.pokedex.model.pokemon.info
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Pokemon(
+data class VersionGroup(
     @SerializedName("name")
     val name: String,
     @SerializedName("url")

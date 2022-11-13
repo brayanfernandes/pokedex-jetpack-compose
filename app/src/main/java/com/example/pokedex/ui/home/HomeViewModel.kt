@@ -7,13 +7,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.model.PokedexRepository
 import com.example.pokedex.model.pokemon.PokemonsResult
+import com.example.pokedex.model.pokemon.info.PokemonCompleteInfo
 import kotlinx.coroutines.launch
 
 private const val TAG = "HomeViewModel"
 
 data class HomeUiState(
     val loading:Boolean = false,
-    val pokemons:PokemonsResult? = null,
+    val pokemons:List<PokemonCompleteInfo>? = null,
     val error:String? = null
 )
 class HomeViewModel(private val pokedexRepository: PokedexRepository): ViewModel() {
@@ -27,7 +28,12 @@ class HomeViewModel(private val pokedexRepository: PokedexRepository): ViewModel
     fun loadPokemons(){
         viewModelScope.launch {
             uiState.value = HomeUiState(loading = true)
-            val pokemons = pokedexRepository.getPokemons()
+            val pokemonsResult = pokedexRepository.getPokemons()
+            val pokemons:MutableList<PokemonCompleteInfo> = mutableListOf()
+            pokemonsResult.pokemonBasicInfos.forEach {
+                val result = pokedexRepository.getPokemonInfo(it.name)
+                pokemons.add(result)
+            }
             uiState.value = HomeUiState(pokemons = pokemons)
         }
     }
